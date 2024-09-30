@@ -1,4 +1,4 @@
-import { DatabaseOperations, executeMySql } from "../utils/database.mjs";
+import { DatabaseOperations, executeMysql } from "../utils/database.mjs";
 import { buildResponse, validateData, colorLog, validateEmail, hash, dateFormat } from "../utils/helpers.mjs";
 
 const tableName = "users";
