@@ -39,10 +39,15 @@ export const handler = async ( event ) =>  {
     if ( path === '/' )
         return endpoints[ path ]();
 
-    if ( endpoints.hasOwnProperty( path ) )
-        return await endpoints[ path ][ method.toLowerCase() ]( { id, username, data, sourceIp } );
-
-    return endpoints.others( 404, '404 Not Found' );
+    try{
+        if ( endpoints.hasOwnProperty( path ) )
+            return await endpoints[ path ][ method.toLowerCase() ]( { id, username, data, sourceIp } );
+    
+        return endpoints.others( 404, '404 Not Found' );
+    }catch ( error ) {
+        console.log( 'ERROR VERIFIED: ', error );
+        return endpoints.others( 400, { message : error }, 'other' );
+    }
 
 }
 
