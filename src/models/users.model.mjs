@@ -62,6 +62,9 @@ export async function postUser({data}){
         newRegister.date_created = dateFormat();
         delete newRegister.confirm;
         delete newRegister.password;
+        delete data.password;
+        delete data.confirm;
+
 
         const response = await database.create( newRegister, keyField);
         return buildResponse(200, response, 'post', keyField, data, response);
