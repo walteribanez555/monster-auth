@@ -58,8 +58,10 @@ export async function postSession( { data , sourceIp}) {
 
         const hashedPassword = hash(newRegister.password);
 
+
+        console.log("Password ", newRegister.password);
         console.log("Hashed password " ,hashedPassword );
-        console.log("Data exist password ", dataExist[0].hashed_password);
+        console.log("Data exist password ", dataExist[0]);
         
 
 
