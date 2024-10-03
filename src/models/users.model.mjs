@@ -2,13 +2,14 @@ import { DatabaseOperations, executeMysql } from "../utils/database.mjs";
 import { buildResponse, validateData, colorLog, validateEmail, hash, dateFormat } from "../utils/helpers.mjs";
 
 const tableName = "users";
-const keyField  = "user_id";
+const keyField  = "username";
 const database = new DatabaseOperations(tableName);
 
 
 const model = { 
     username : "string",
     password : "string",
+    confirm : "string",
     name : "string",
     status : "number",
     rols : "string",
