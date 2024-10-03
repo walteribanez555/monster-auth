@@ -64,7 +64,7 @@ export async function postUser({data}){
         delete newRegister.password;
 
         const response = await database.create( newRegister, keyField);
-        return buildResponse(200, response, 'post', keyField, data);
+        return buildResponse(200, response, 'post', keyField, data, response);
 
     }catch( error) { 
         colorLog(`Post Users Error : ${ JSON.stringify(error)}`, 'red', 'reset');
