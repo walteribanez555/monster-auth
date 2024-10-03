@@ -57,7 +57,10 @@ export async function postSession( { data , sourceIp}) {
             return buildResponse(406, { message : 'The username is not registered on the database'}, 'post');
 
         const hashedPassword = hash(newRegister.password);
-        if(hashedPassword !== dataExist[0].hashedPassword)
+        
+
+
+        if(hashedPassword !== dataExist[0].hashed_password)
             return buildResponse(403, { message : 'Password did not match with stored password'}, 'post');
 
 
