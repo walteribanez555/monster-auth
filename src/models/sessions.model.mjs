@@ -101,8 +101,10 @@ export async function postSession({ data, sourceIp }) {
         sessionToken: jwt.sign(result, process.env.SECRET, {
           expiresIn: newRegister.expires,
         }),
-        result, 
-        userRolsData 
+        username : newRegister.username,
+        user_id : dataExist[0].user_id,
+        name : dataExist[0].name,
+        rols : userRolsData,
       },
       "post",
       keyField,
