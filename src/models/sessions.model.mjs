@@ -74,6 +74,9 @@ export async function postSession( { data , sourceIp}) {
 
         const userRols = dataExist[0].rols.split(',');
         const rols = await auxDatabaseRols.read();
+
+        console.log('ROLS: ', rols);
+        console.log('USER ROLS: ', userRols);
         
         const userRolsData = rols.rows.filter( rol => userRols.includes(rol.rol_id.toString()) );
 
