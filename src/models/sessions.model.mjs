@@ -62,6 +62,15 @@ export async function postSession({ data, sourceIp }) {
         "post"
       );
 
+    if(dataExist[0].status === 2){
+        return buildResponse(
+            406,
+            { message: "User is not active" },
+            "post"
+            );
+    }
+
+
     const hashedPassword = hash(newRegister.password);
 
     if (hashedPassword !== dataExist[0].hashed_password)
