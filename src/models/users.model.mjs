@@ -58,7 +58,7 @@ export async function postUser({data}){
 
 
         newRegister.hashed_password = hash(newRegister.password);
-        newRegister.status =1;
+        newRegister.status = newRegister.status || 1;
         newRegister.date_created = dateFormat();
         delete newRegister.confirm;
         delete newRegister.password;
