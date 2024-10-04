@@ -77,8 +77,12 @@ export async function postSession( { data , sourceIp}) {
 
         console.log('ROLS: ', rols);
         console.log('USER ROLS: ', userRols);
-        
-        const userRolsData = rols.rows.filter( rol => userRols.includes(rol.rol_id.toString()) );
+
+ 
+
+        const userRolsData = rols.filter( rol => userRols.includes( rol.rol_id.toString() ) );
+
+        console.log('USER ROLS DATA: ', userRolsData);
 
 
 
@@ -94,7 +98,7 @@ export async function postSession( { data , sourceIp}) {
             rols : dataExist[0].rols,
         }
 
-        return buildResponse( 200, { sessionToken : jwt.sign( result, process.env.SECRET, { expiresIn : newRegister.expires } , result, userRolsData  ) }, 'post', keyField, result );
+        return buildResponse( 200, { sessionToken : jwt.sign( result, process.env.SECRET, { expiresIn : newRegister.expires } ) }, 'post', keyField, result );
     } catch ( error ) {
         colorLog( ` POST SESSIONS ERROR:  ${ JSON.stringify( error ) }`, 'red', 'reset' );
         return buildResponse( 500, error, 'post' );
