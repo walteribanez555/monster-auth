@@ -8,6 +8,7 @@ const tableName = 'sessions';
 const keyField = 'session_id';
 const database = new DatabaseOperations( tableName );
 const auxDatabase = new DatabaseOperations( 'users' );
+const auxDatabaseRols = new DatabaseOperations( 'rols' );
 
 const model = { 
     username : 'string',
@@ -49,24 +50,33 @@ export async function postSession( { data , sourceIp}) {
             }
         };
 
+
         const dataExist = await auxDatabase.read( filter );
         const validate = dataExist && dataExist.length > 0 ? true : false;
+
+        
+
 
 
         if(!validate)
             return buildResponse(406, { message : 'The username is not registered on the database'}, 'post');
 
+
+
+
         const hashedPassword = hash(newRegister.password);
-
-
-        console.log("Password ", newRegister.password);
-        console.log("Hashed password " ,hashedPassword );
-        console.log("Data exist password ", dataExist[0]);
-        
 
 
         if(hashedPassword !== dataExist[0].hashed_password)
             return buildResponse(403, { message : 'Password did not match with stored password'}, 'post');
+
+        
+
+        userRols = dataExist[0].rols.split(',');
+        const rols = await auxDatabaseRols.read();
+        
+        const userRolsData = rols.rows.filter( rol => userRols.includes(rol.rol_id.toString()) );
+
 
 
         newRegister.host = sourceIp;
@@ -81,7 +91,7 @@ export async function postSession( { data , sourceIp}) {
             rols : dataExist[0].rols,
         }
 
-        return buildResponse( 200, { sessionToken : jwt.sign( result, process.env.SECRET, { expiresIn : newRegister.expires } ) }, 'post', keyField, result );
+        return buildResponse( 200, { sessionToken : jwt.sign( result, process.env.SECRET, { expiresIn : newRegister.expires } , result, userRolsData  ) }, 'post', keyField, result );
     } catch ( error ) {
         colorLog( ` POST SESSIONS ERROR:  ${ JSON.stringify( error ) }`, 'red', 'reset' );
         return buildResponse( 500, error, 'post' );
