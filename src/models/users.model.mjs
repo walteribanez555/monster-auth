@@ -3,6 +3,7 @@ import { buildResponse, validateData, colorLog, validateEmail, hash, dateFormat 
 
 const tableName = "users";
 const keyField  = "username";
+const key_id = "user_id";
 const database = new DatabaseOperations(tableName);
 
 
@@ -97,7 +98,7 @@ export async function putUser( { id, data } ) {
         }
 
         const where = {
-            [ keyField ] : id
+            [ keyField ] : newRegister.username
         };
 
         const response = await database.update( update, where );
