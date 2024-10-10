@@ -98,7 +98,7 @@ export async function putUser( { id, data } ) {
         }
 
         const where = {
-            [ keyField ] : newRegister.username
+            [ keyField ] : update.username
         };
 
         const response = await database.update( update, where );
